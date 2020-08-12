@@ -74,5 +74,14 @@ pipeline {
         sh 'ci/push-docker.sh'
         }
     }
+    stage('Componet test') {
+      when { not { branch 'dev/' } }
+      steps {
+        unstash 'build'
+        sh 'ci/component-test.sh'
+        
+      }
+
+    }
   }
 }
