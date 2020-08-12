@@ -50,13 +50,20 @@ pipeline {
       }
 
     }
+    stage('Build docker app') {
+      steps {
+            sh 'Echo "On master branch"'
+          }
+    }
+    
     stage('Push docker app') {
+      when { branch 'master' }
       environment {
         docker_username = 'sharanka'
         DOCKERCREDS = credentials('docker_login') //use the credentials just created in this stage
       }
       steps {
-        unstash 'build' //unstash the repository code
+        unstash 'build'  //unstash the repository code
         sh 'ci/build-docker.sh'
         sh 'echo "$DOCKERCREDS_PSW" | docker login -u "$DOCKERCREDS_USR" --password-stdin' //login to docker hub with the credentials above
         sh 'ci/push-docker.sh'
