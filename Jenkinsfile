@@ -76,6 +76,10 @@ pipeline {
     }
     stage('Componet test') {
       when { not { branch 'dev/' } }
+      environment {
+        docker_username = 'sharanka'
+        DOCKERCREDS = credentials('docker_login') //use the credentials just created in this stage
+      }
       steps {
         unstash 'build'
         sh 'ci/component-test.sh'
