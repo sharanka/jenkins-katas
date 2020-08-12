@@ -75,7 +75,7 @@ pipeline {
         }
     }
     stage('Componet test') {
-      when { not { branch 'dev/' } }
+      when { not { branch pattern:'dev/*' } }
       environment {
         docker_username = 'sharanka'
         DOCKERCREDS = credentials('docker_login') //use the credentials just created in this stage
