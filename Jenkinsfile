@@ -51,11 +51,16 @@ pipeline {
 
     }
     stage('Build docker app') {
+      environment {
+        docker_username = 'sharanka'
+        DOCKERCREDS = credentials('docker_login') //use the credentials just created in this stage
+      }
       steps {
-            sh 'Echo "On master branch"'
+            unstash 'build'  //unstash the repository code
+            sh 'ci/build-docker.sh'
           }
     }
-    
+
     stage('Push docker app') {
       when { branch 'master' }
       environment {
