@@ -22,6 +22,19 @@ pipeline {
           }
         }
 
+        stage('Test app') {
+          agent {
+            docker {
+              image 'gradle:jdk11'
+            }
+
+          }
+          steps {
+            sh 'ci/test-app.sh'
+            archiveArtifacts 'app/build/libs/'
+          }
+        }
+
       }
     }
 
