@@ -31,7 +31,7 @@ pipeline {
           }
           steps {
             sh 'ci/unit-test-app.sh'
-            archiveArtifacts 'junit \'app/build/test-results/test/TEST-*.xml'
+            junit 'app/build/test-results/test/TEST-*.xml'
           }
         }
 
